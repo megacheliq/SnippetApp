@@ -25,6 +25,7 @@ SimplSnippet  – это инструмент для проведения соб
     ```
 
     Это создаст и запустит все необходимые контейнеры.
+    После запуска необходимо перезапустить контейнеры simpl.snippet и simpl.snippet.client
 
 ### Загрузка базы данных
 
@@ -49,7 +50,7 @@ SimplSnippet  – это инструмент для проведения соб
 1. Откройте Keycloak в браузере: [localhost:8080](http://localhost:8080).
 2. Перейдите в realm `simpl`.
 3. Добавьте пользователя.
-4. Назначьте пользователю одну из ролей: `snippet-admin` или `snippet-user`.
+4. Назначьте пользователю одну из ролей: `applications-simpl-snippet-administrator` или `applications-simpl-snippet-user`.
 5. Установите пароль в разделе `credentials`.
 
 ## Функциональные возможности
