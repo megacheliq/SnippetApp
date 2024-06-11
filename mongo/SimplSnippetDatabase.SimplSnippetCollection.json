@@ -1,0 +1,504 @@
+[{
+  "_id": {
+    "$oid": "664e1c1a821166903bb62f49"
+  },
+  "Theme": "Асинхронное программирование",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System;\nusing System.Threading.Tasks;\nConsole.WriteLine(\"Starting...\");\nvar task1 = Task1();\nvar task2 = Task2();\nawait Task.WhenAll(task1, task2);\nConsole.WriteLine(\"Finished!\");\nasync Task Task1()\n{\n   Console.WriteLine(\"Task1 started\");\n   await Task.Delay(2000);\n   Console.WriteLine(\"Task1 finished\");\n}\nasync Task Task2()\n{\n   Console.WriteLine(\"Task2 started\");\n   await Task.Delay(1000);\n   Console.WriteLine(\"Task2 finished\");\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Что такое модификатор async в сигнатуре метода и зачем он используется?",
+    "Какой будет результат, если изменить вызов Task.WhenAll(task1, task2) на await Task.WhenAny(task1, task2)?",
+    "Как можно изменить код, чтобы задача Task2 всегда завершалась после задачи Task1, независимо от времени задержки?"
+  ],
+  "Solution": "Будет выведено Starting... Task1 started Task2 started Task2 finished Task1 finished Finished! Это происходит потому, что запускаются две асинхронные задачи Task1 и Task2 параллельно с помощью операторов await. Task2 завершается первым, так как имеет меньшую задержку (1 секунда по сравнению с 2 секундами у Task1). После завершения обеих задач, программа выводит \"Finished!\"",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519918348526372"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519918348526626"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1c7a821166903bb62f4b"
+  },
+  "Theme": "Коллекции",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "using System.Collections.Generic;\nusing System;\nHashSet<string> team1 = new HashSet<string> { \"Alice\", \"Bob\", \"Charlie\" };\nHashSet<string> team2 = new HashSet<string> { \"Alice\", \"David\", \"Eve\" };\nHashSet<string> team3 = new HashSet<string> { \"Bob\", \"Charlie\", \"David\" };\nHashSet<string> team4 = new HashSet<string> { \"Frank\", \"Grace\", \"Helen\" };\nList<Tuple<string, string, HashSet<string>>> commonFriends = new List<Tuple<string, string, HashSet<string>>>();\nFindCommonFriends(team1, team2, \"Team1\", \"Team2\", commonFriends);\nFindCommonFriends(team1, team3, \"Team1\", \"Team3\", commonFriends);\nFindCommonFriends(team1, team4, \"Team1\", \"Team4\", commonFriends);\nFindCommonFriends(team2, team3, \"Team2\", \"Team3\", commonFriends);\nFindCommonFriends(team2, team4, \"Team2\", \"Team4\", commonFriends);\nFindCommonFriends(team3, team4, \"Team3\", \"Team4\", commonFriends);\nforeach (var tuple in commonFriends)\n{\n   Console.WriteLine($\"Общие друзья между {tuple.Item1} и {tuple.Item2}: {string.Join(\", \", tuple.Item3)}\");\n}\nvoid FindCommonFriends(HashSet<string> teamA, HashSet<string> teamB, string nameA, string nameB, List<Tuple<string, string, HashSet<string>>> result)\n{\n   HashSet<string> common = new HashSet<string>(teamA);\n   common.IntersectWith(teamB);\n   if (common.Count > 0)\n   {\n       result.Add(new Tuple<string, string, HashSet<string>>(nameA, nameB, common));\n   }\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какие основные различия между List и HashSet в C#? В каких случаях стоит предпочесть одну коллекцию другой?",
+    "В чем основное назначение метода IntersectWith у коллекции HashSet? Как он отличается от метода Intersect из LINQ?",
+    "Как бы вы реализовали собственную коллекцию в C#? Какие методы и интерфейсы вы бы реализовали для обеспечения основного функционала коллекции?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Общие друзья между Team1 и Team2: Alice Общие друзья между Team1 и Team3: Bob, Charlie Общие друзья между Team2 и Team3: David Этот код анализирует участников различных групп и идентифицирует общих друзей между ними. Для каждой пары групп он создает пересечение участников из обеих групп и выводит результаты",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519919303021227"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519919303021228"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1c9f821166903bb62f4c"
+  },
+  "Theme": "Коллекции",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "using System.Collections.Generic;\nusing System;\nIEnumerable<string> words = new List<string>\n{\n   \"apple\", \"banana\", \"cat\", \"dog\", \"elephant\", \"fox\", \"giraffe\", \"hippopotamus\",\n   \"tiger\", \"lion\", \"eleven\", \"racecar\", \"eat\", \"tea\", \"bat\"\n};\nforeach (var group in GroupWordsByStartingLetter(words))\n{\n   Console.WriteLine($\"Words starting with '{group.Key}': {string.Join(\", \", group.Value)}\");\n}\nIEnumerable<KeyValuePair<char, IEnumerable<string>>> GroupWordsByStartingLetter(IEnumerable<string> words)\n{\n   var groups = new Dictionary<char, List<string>>();\n   foreach (var word in words)\n   {\n       var startingLetter = word[0];\n       if (!groups.ContainsKey(startingLetter))\n       {\n           groups[startingLetter] = new List<string>();\n       }\n       groups[startingLetter].Add(word);\n   }\n   foreach (var group in groups)\n   {\n       yield return new KeyValuePair<char, IEnumerable<string>>(group.Key, group.Value);\n   }\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Как можно улучшить производительность этого кода для больших списков слов?",
+    "Какие изменения потребуются в коде, если нужно вывести слова, начинающиеся с гласных букв?",
+    "Как можно модифицировать код для вывода количества слов в каждой группе, а не самих слов?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Words starting with 'a': apple Words starting with 'b': banana, bat Words starting with 'c': cat Words starting with 'd': dog Words starting with 'e': elephant, eleven, eat Words starting with 'f': fox Words starting with 'g': giraffe Words starting with 'h': hippopotamus Words starting with 't': tiger, tea Words starting with 'l': lion Words starting with 'r': racecar Этот код группирует слова по первой букве их начальной формы и использует yield return для возврата каждой группы слов, начинающихся с определенной буквы. Каждая группа представлена парой ключ-значение, где ключ - это первая буква, а значение - список слов, начинающихся с этой буквы. Таким образом, результат работы кода показывает слова, сгруппированные по начальной букве.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519919678321517"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519919678321518"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1cf0821166903bb62f4d"
+  },
+  "Theme": "DRY",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "namespace Simpl.Snippets.DRY;\nusing System;\npublic class Product\n{\n   public string Name { get; set; }\n   public double Price { get; set; }\n   public void PrintProductInfo()\n   {\n       Console.WriteLine($\"Product: {Name}, Price: {Price:C}\");\n   }\n}\npublic class ShoppingCart\n{\n   public Product[] Products { get; set; }\n   public double CalculateTotalPrice()\n   {\n       double total = 0;\n       foreach (var product in Products)\n       {\n           total += product.Price;\n       }\n       return total;\n   }\n   public void PrintShoppingCart()\n   {\n       Console.WriteLine(\"Shopping Cart:\");\n       foreach (var product in Products)\n       {\n           Console.WriteLine($\"- {product.Name}: {product.Price:C}\");\n       }\n   }\n}\nclass Program\n{\n   static void Main(string[] args)\n   {\n       Product[] products = new Product[]\n       {\n           new Product { Name = \"Phone\", Price = 599.99 },\n           new Product { Name = \"Laptop\", Price = 1299.99 },\n           new Product { Name = \"Tablet\", Price = 399.99 }\n       };\n       ShoppingCart cart = new ShoppingCart { Products = products };\n       cart.PrintShoppingCart();\n       double totalPrice = cart.CalculateTotalPrice();\n       Console.WriteLine($\"Total Price: {totalPrice:C}\");\n   }\n}",
+  "MainQuestion": "Ознакомьтесь со снипетом и скажите какие нарушения принципов проектирования там имеются",
+  "AdditionalQuestions": [
+    "Как можно объединить итерации по продуктам для устранения повторений в коде?",
+    "Какие могут быть последствия отсутствия соблюдения принципа DRY в этом коде на его будущую поддержку и расширяемость?",
+    "Какие преимущества принципа DRY приводятся в контексте этой задачи?"
+  ],
+  "Solution": " Повторение логики вывода информации о продукте: Логика вывода информации о продукте (PrintProductInfo) дублируется как в классе Product, так и в методе PrintShoppingCart класса ShoppingCart. Это приводит к дублированию кода и усложняет его поддержку. Повторение итерации по продуктам: Итерация по продуктам для вывода информации о них (PrintShoppingCart) и для вычисления общей цены (CalculateTotalPrice) также дублируется в классе ShoppingCart. Это также является нарушением принципа DRY, поскольку одна и та же логика итерации используется несколько раз.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519920480706432"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519920480706433"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1f02821166903bb62f53"
+  },
+  "Theme": "SOLID",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "namespace Simpl.Snippets.SOLID;\nusing System;\nclass Program\n{\n   static void Main(string[] args)\n   {\n       IShape rectangle = new Rectangle { Width = 5, Height = 10 };\n       IShape circle = new Circle { Radius = 7 };\n       rectangle.PrintArea();\n       circle.PrintArea();\n   }\n}\ninterface IShape\n{\n   double CalculateArea();\n   void PrintArea();\n}\nclass Rectangle : IShape\n{\n   public double Width { get; set; }\n   public double Height { get; set; }\n   public double CalculateArea()\n   {\n       return Width * Height;\n   }\n   public void PrintArea()\n   {\n       ConsolePrinter printer = new ConsolePrinter();\n       printer.Print(CalculateArea());\n   }\n}\nclass Circle : IShape\n{\n   public double Radius { get; set; }\n   public double CalculateArea()\n   {\n       return Math.PI * Math.Pow(Radius, 2);\n   }\n   public void PrintArea()\n   {\n       ConsolePrinter printer = new ConsolePrinter();\n       printer.Print(CalculateArea());\n   }\n}\nclass ConsolePrinter\n{\n   public void Print(double area)\n   {\n       Console.WriteLine($\"Area: {area}\");\n   }\n}",
+  "MainQuestion": "Ознакомьтесь со снипетом и скажите какие нарушения принципов SOLID там имеются",
+  "AdditionalQuestions": [
+    "Как бы вы перепроектировали класс AreaCalculator, чтобы он соответствовал принципам SOLID более тщательно?",
+    "Какие дополнительные шаги нужно было бы предпринять, чтобы соблюсти принцип инверсии зависимостей (DIP) более строго в этом коде?"
+  ],
+  "Solution": "Нарушена D В данном примере нарушен принцип Dependency Inversion (D) из SOLID. Классы Rectangle и Circle прямо зависят от класса ConsolePrinter, создавая его экземпляр в своих методах PrintArea(). Это создает прямую зависимость от конкретной реализации ConsolePrinter, что делает классы Rectangle и Circle менее гибкими и усложняет их тестирование и возможность замены ConsolePrinter другой реализацией.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519925780264596"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519925780264597"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e20c0821166903bb62f57"
+  },
+  "Theme": "Многопоточное программирование",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System.Threading.Tasks;\nusing System;\nusing System.Threading;\nint interlockedCounter = 0;\nint regularCounter = 0;\nTask[] tasks = new Task[10000];\nfor (int i = 0; i < tasks.Length; i++)\n{\n   tasks[i] = Task.Run(() =>\n   {\n       Interlocked.Increment(ref interlockedCounter);\n       regularCounter++;\n   });\n}\nTask.WaitAll(tasks);\nConsole.WriteLine($\"Are counters equal? {interlockedCounter == regularCounter}\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Как можно избежать ситуации гонки данных в данном коде?",
+    "Какие другие методы из класса Interlocked могут быть полезны в многопоточной среде?",
+    "Какие механизмы .NET предоставляет для синхронизации доступа к общим ресурсам в многопоточной среде?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Are counters equal? False При выполнении данного кода, interlockedCounter увеличивается атомарно с помощью Interlocked.Increment, гарантируя корректное увеличение счетчика в многопоточной среде. Однако regularCounter увеличивается неатомарно операцией ++, что может привести к гонке данных и потере инкрементов. Поэтому итоговое значение regularCounter может быть меньше 10000, что подтверждается результатом вывода, где interlockedCounter равен 10000, а regularCounter меньше, и проверка на равенство возвращает False.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519930243121035"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519930243121036"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1d1d821166903bb62f4e"
+  },
+  "Theme": "LINQ",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System.Collections.Generic;\nusing System;\nusing System.Linq;\nList<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };\nvar result = numbers\n   .Where(n => n % 2 == 0)\n   .Select(n => n * 2)\n   .OrderByDescending(n => n)\n   .Distinct();\nnumbers.AddRange(new List<int> { 12, 14, -2, -4, -6 });\nforeach (var num in result)\n{\n   Console.WriteLine(num);\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какие методы LINQ используются в этом коде и для чего?",
+    "Какие другие операции можно было бы выполнить с использованием LINQ для данной коллекции чисел?"
+  ],
+  "Solution": "Будет выведено 28 24 20 16 12 8 4 - 4 - 8 - 12 Это происходит потому, что программа выбирает из списка numbers только четные числа с помощью метода Where, а затем умножает каждое из них на 2 с помощью метода Select и сортируются по убыванию. Полученные результаты выводятся на консоль",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519920934853100"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519920934853101"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1d9e821166903bb62f4f"
+  },
+  "Theme": "ООП",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System;\nclass Animal\n{\n   public virtual void Eat()\n   {\n       Console.WriteLine(\"Animal is eating\");\n   }\n   public void Sleep()\n   {\n       Console.WriteLine(\"Animal is sleeping\");\n   }\n}\nclass Dog : Animal\n{\n   public override void Eat()\n   {\n       Console.WriteLine(\"Dog is eating\");\n   }\n   public new void Sleep()\n   {\n       Console.WriteLine(\"Dog is sleeping\");\n   }\n}\nclass Program\n{\n   static void Main()\n   {\n       Animal animal = new Dog();\n       animal.Eat();\n       animal.Sleep();\n       Dog dog = new Dog();\n       dog.Eat();\n       dog.Sleep();\n   }\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Что произойдет, если в классе Dog не использовать ключевое слово override при переопределении метода Eat?",
+    "Какие методы можно вызвать у объекта Animal, который фактически является объектом класса Dog?",
+    "Когда лучше использовать переопределение методов, а когда сокрытие?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Dog is eating Animal is sleeping Dog is eating Dog is sleeping Класс Animal имеет виртуальный метод Eat, который переопределен в классе Dog. Метод Sleep в классе Animal не является виртуальным и переопределяется в классе Dog с использованием ключевого слова new. В Main создается объект Dog как Animal, что демонстрирует различное поведение виртуального и невиртуального методов при использовании полиморфизма.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519922220488509"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519922220488510"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1fbd821166903bb62f54"
+  },
+  "Theme": "Строки",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System.Text;\nusing System;\nstring str = \"\";\nstr += \"Hello\";\nstr += \" World\";\nstr += Environment.NewLine + \"The value is: \" + 42;\nstr = str.Insert(5, \" Beautiful\");\nstr = str.Replace(\"World\", \"Universe\");\nstr = str.Remove(5, 10);\nConsole.WriteLine(str);\nStringBuilder sb = new StringBuilder();\nsb.Append(\"Hello\");\nsb.AppendLine(\" World\");\nsb.AppendFormat(\"The value is: {0}\", 42);\nsb.Insert(5, \" Beautiful\");\nsb.Replace(\"World\", \"Universe\");\nsb.Remove(5, 10);\nConsole.WriteLine(sb);",
+  "MainQuestion": "Какой тип данных лучше всего подходит для построения длинных или часто изменяемых строк в контексте данной задачи?",
+  "AdditionalQuestions": [
+    "Какие другие методы у StringBuilder могут быть использованы для модификации строки?",
+    "Можно ли использовать StringBuilder для параллельной обработки строк в многопоточной среде?"
+  ],
+  "Solution": " Для построения длинных или часто изменяемых строк в данной задаче более подходящим типом данных является StringBuilder в языке C#. Это объясняется тем, что StringBuilder позволяет эффективно конструировать и модифицировать строки без создания большого количества временных объектов, что улучшает производительность при работе с большими объемами данных. В данной задаче преимущество StringBuilder проявляется при выполнении множественных операций конкатенации или модификации строк, таких как добавление, вставка, замена или удаление символов. При выполнении этой программы string и StringBuilder используются для построения одинаковой строки. Однако, string создает новую строку при каждой операции конкатенации или модификации, что приводит к созданию и копированию новых объектов string в памяти. С другой стороны, StringBuilder использует внутренний буфер, который может быть изменен без создания нового объекта, что делает его более эффективным для множественных операций конкатенации или модификации строк.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519927657073952"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519927657073954"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1c55821166903bb62f4a"
+  },
+  "Theme": "Коллекции",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System.Collections.Generic;\nusing System;\nusing System.Linq;\nDictionary<string, List<int>> data = new Dictionary<string, List<int>>\n{\n   { \"Group1\", new List<int> { 1, 2, 3, 4, 5 } },\n   { \"Group2\", new List<int> { 3, 4, 5, 6, 7 } },\n   { \"Group3\", new List<int> { 5, 6, 7, 8, 9 } }\n};\nDictionary<string, List<int>> divisibleBy3Or5 = new Dictionary<string, List<int>>();\nDictionary<string, int> sumsDivisibleBy3Or5 = new Dictionary<string, int>();\nforeach (var group in data)\n{\n   var divisibleNumbers = group.Value.Where(x => x % 3 == 0 || x % 5 == 0).ToList();\n   divisibleBy3Or5.Add(group.Key, divisibleNumbers);\n   sumsDivisibleBy3Or5.Add(group.Key, divisibleNumbers.Sum());\n}\nforeach (var group in divisibleBy3Or5)\n{\n   Console.WriteLine($\"Numbers divisible by 3 or 5 in {group.Key}: {string.Join(\", \", group.Value)}\");\n}\nforeach (var sum in sumsDivisibleBy3Or5)\n{\n   Console.WriteLine($\"Sum of numbers divisible by 3 or 5 in {sum.Key}: {sum.Value}\");\n}\nint totalSumDivisibleBy3Or5 = sumsDivisibleBy3Or5.Sum(x => x.Value);\nConsole.WriteLine($\"Total sum of numbers divisible by 3 or 5: {totalSumDivisibleBy3Or5}\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какова сложность алгоритма вычисления общей суммы всех элементов?",
+    "Можно ли упростить вычисление общей суммы всех элементов, не проходя по всем группам?",
+    "Какие другие операции можно было бы выполнить с данными группами чисел, используя словарь data и словарь sums?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Numbers divisible by 3 or 5 in Group1: 3, 5 Numbers divisible by 3 or 5 in Group2: 3, 5, 6 Numbers divisible by 3 or 5 in Group3: 5, 6, 9 Sum of numbers divisible by 3 or 5 in Group1: 8 Sum of numbers divisible by 3 or 5 in Group2: 14 Sum of numbers divisible by 3 or 5 in Group3: 20 Total sum of numbers divisible by 3 or 5: 42 Этот результат выводится потому, что код фильтрует числа в каждой группе, оставляя только те, которые делятся на 3 или 5. Затем он вычисляет сумму отфильтрованных чисел в каждой группе и общую сумму всех таких чисел из всех групп.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519918936948844"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519918936948846"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e2117821166903bb62f59"
+  },
+  "Theme": "Многопоточное программирование",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "using System.Collections.Concurrent;\nusing System.Threading.Tasks;\nusing System;\nvar queue = new ConcurrentQueue<int>();\nvar processingCompleted = false;\nvar producerTask = Task.Run(async () =>\n{\n   for (int i = 0; i < 3; i++)\n   {\n       queue.Enqueue(i);\n       Console.WriteLine($\"Added {i} to the queue\");\n       await Task.Delay(100);\n   }\n   processingCompleted = true;\n});\nvar consumerTask = Task.Run(async () =>\n{\n   while (true)\n   {\n       if (queue.TryDequeue(out int item))\n       {\n           Console.WriteLine($\"Removed {item} from the queue\");\n       }\n       else\n       {\n           if (processingCompleted)\n           {\n               Console.WriteLine(\"Queue is empty\");\n               break;\n           }\n       }\n       await Task.Delay(200);\n   }\n});\nawait Task.WhenAll(producerTask, consumerTask);\nConsole.WriteLine(\"All items processed\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какие еще потокобезопасные коллекции предоставляет .NET?",
+    "В чем разница между потокобезопасной коллекцией и обычной коллекцией с точки зрения многопоточности?",
+    "Как можно улучшить производительность работы с потокобезопасными коллекциями в случае большого количества одновременных операций?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Added 0 to the queue Removed 0 from the queue Added 1 to the queue Removed 1 from the queue Added 2 to the queue Removed 2 from the queue Queue is empty All items processed При использовании потокобезопасной коллекции ConcurrentQueue<int> каждая операция добавления (Enqueue) и извлечения (TryDequeue) элемента атомарна, что означает, что они выполняются как одна неделимая операция. Таким образом, благодаря использованию потокобезопасной коллекции и атомарных операций, порядок добавления и извлечения элементов сохраняется и не происходит ошибок или гонок данных.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519931114316160"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519931114316161"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1ebe821166903bb62f52"
+  },
+  "Theme": "ООП",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "using System;\nclass Program\n{\n   static void Main(string[] args)\n   {\n       DerivedClass derived = new DerivedClass();\n   }\n}\nclass BaseClass\n{\n   public BaseClass()\n   {\n       Console.WriteLine(\"BaseClass: Базовый конструктор без параметров\");\n   }\n   public BaseClass(string message)\n   {\n       Console.WriteLine($\"BaseClass: Базовый конструктор с параметром - {message}\");\n   }\n}\nclass DerivedClass : BaseClass\n{\n   public DerivedClass() : this(\"Привет от DerivedClass\")\n   {\n       Console.WriteLine(\"DerivedClass: Производный конструктор без параметров\");\n   }\n   public DerivedClass(string message) : base(message)\n   {\n       Console.WriteLine($\"DerivedClass: Производный конструктор с параметром - {message}\");\n   }\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Можно ли создать экземпляр класса BaseClass напрямую, не создавая класс DerivedClass? Если да, то как?",
+    "Что произойдет, если в производном классе объявить конструктор с параметром и не объявить конструктор без параметров?"
+  ],
+  "Solution": "Программа должна вывести на консоль: BaseClass: Базовый конструктор с параметром - Привет от DerivedClass DerivedClass: Производный конструктор с параметром - Привет от DerivedClass DerivedClass: Производный конструктор без параметров В этой программе BaseClass имеет два конструктора, один без параметров и один с параметром, а DerivedClass также имеет два конструктора, один без параметров (который вызывает конструктор с параметром) и один с параметром (который вызывает конструктор BaseClass с параметром).",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519925108518335"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519925108518336"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1e0b821166903bb62f51"
+  },
+  "Theme": "ООП",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "namespace Simpl.Snippets.OOP;\nusing System;\nclass Program\n{\n   static void Main(string[] args)\n   {\n       MyClass myClass = new MyClass();\n       myClass.PublicMethod();\n       myClass.ProtectedMethod();\n       myClass.InternalMethod();\n       myClass.CallPrivateMethod();\n       myClass.PrivateProtectedMethod();\n       myClass.ProtectedInternalMethod();\n   }\n}\npublic class MyClass\n{\n   public void PublicMethod()\n   {\n       Console.WriteLine(\"This is a public method.\");\n   }\n   protected void ProtectedMethod()\n   {\n       Console.WriteLine(\"This is a protected method.\");\n   }\n   [Obsolete(\"This method is not accessible\", true)]\n   internal void InternalMethod()\n   {\n       Console.WriteLine(\"This is an internal method.\");\n   }\n   private void PrivateMethod()\n   {\n       Console.WriteLine(\"This is a private method.\");\n   }\n   private protected void PrivateProtectedMethod()\n   {\n       Console.WriteLine(\"This is a private protected method.\");\n   }\n   protected internal void ProtectedInternalMethod()\n   {\n       Console.WriteLine(\"This is a protected internal method.\");\n   }\n   public void CallPrivateMethod()\n   {\n       PrivateMethod();\n   }\n}",
+  "MainQuestion": "Скомпилируется ли данный код или нет? Почему?",
+  "AdditionalQuestions": [
+    "Что произойдет, если объявить InternalMethod как protected internal?",
+    "Можно ли вызвать private метод другого класса извне? Если да, то как?",
+    "Какой модификатор доступа используется по умолчанию для членов класса в C#?"
+  ],
+  "Solution": "При вызове методов ProtectedMethod, InternalMethod и PrivateProtectedMethod из класса MyClass происходит ошибка компиляции из-за их модификаторов доступа ProtectedMethod: Этот метод объявлен с модификатором protected, что означает, что он доступен только внутри класса MyClass и его потомков. Попытка вызвать его вне класса или его потомков приведет к ошибке компиляции. При вызове метода InternalMethod возникает ошибка компиляции из-за атрибута [Obsolete], который помечен с параметром error равным true. Этот атрибут указывает компилятору, что метод считается устаревшим и не должен использоваться. PrivateProtectedMethod: Этот метод объявлен с модификатором private protected, что означает, что он доступен только внутри класса MyClass и его производных классов в пределах той же сборки. Попытка вызвать его из другого класса или за пределами сборки приведет к ошибке компиляции.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519923310679056"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519923310679057"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e21a8821166903bb62f5a"
+  },
+  "Theme": "Многопоточное программирование",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Senior",
+  "CodeSnippet": "using System.Linq;\nusing System.Threading.Tasks.Dataflow;\nusing System;\nusing System.Threading.Tasks;\nvar data = Enumerable.Range(1, 3);\nvar processBlock = new TransformBlock<int, string>(async number =>\n{\n   await Task.Delay(100);\n   return $\"Processed number: {number}\";\n}, new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded });\nvar saveBlock = new ActionBlock<string>(async result =>\n{\n   Console.WriteLine($\"Saving result: {result}\");\n   await Task.Delay(50);\n}, new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = DataflowBlockOptions.Unbounded });\nvar linkOptions = new DataflowLinkOptions { PropagateCompletion = true };\nprocessBlock.LinkTo(saveBlock, linkOptions);\nforeach (var number in data)\n{\n   await processBlock.SendAsync(number);\n}\nprocessBlock.Complete();\nawait saveBlock.Completion;\nConsole.WriteLine(\"All numbers processed and saved\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какие другие типы Dataflow блоков существуют в .NET?",
+    "В чем разница между TransformBlock и ActionBlock?",
+    "Как обработать исключения в Dataflow пайплайне?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Saving result: Processed number: 1 Saving result: Processed number: 2 Saving result: Processed number: 3 All numbers processed and saved Код использует Dataflow блоки для обработки и сохранения данных. TransformBlock обрабатывает числа от 1 до 3 параллельно, с задержкой в 100 мс. Результаты передаются в ActionBlock, который выводит их в консоль с задержкой в 50 мс. Из-за параллельной обработки, числа выводятся в порядке обработки: 1, 2, 3",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519932565610968"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519932565610971"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1fe3821166903bb62f55"
+  },
+  "Theme": "Строки",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Middle",
+  "CodeSnippet": "using System;\nstring str = \"Hello\";\nstring str2 = \"World\";\nstring result1 = $\"{str[0]}{(str2.Length > 2 ? str2[2] : ' ')}{(str.Length > 2 ? str[2] : ' ')}\";\nConsole.WriteLine($\"Result 1: {result1}\");\nstring result2 = $\"{str}{str2}\".Replace(\"H\", \"Z\").Replace(\"W\", \"X\").Replace(\"l\", \"M\");\nConsole.WriteLine($\"Result 2: {result2}\");\nstring result3 = $\"{str}{str2}{str}\".Replace(\"l\", \"\").Replace(\"o\", \"\");\nConsole.WriteLine($\"Result 3: {result3}\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Какие другие методы можно было бы использовать для достижения того же результата в каждом из примеров?",
+    "Какие есть способы оптимизировать эти операции со строками с использованием встроенных методов .NET?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Result 1: Hrl Result 2: ZeMMoXorMd Result 3: HeWrdHe Результаты вывода в каждом из примеров обусловлены использованием различных операций со строками в C#. В первом примере используется интерполяция строк с условным оператором, во втором - последовательные операции замены символов, а в третьем - интерполяция строк и конкатенация с последующей заменой символов.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519928032155949"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519928032155950"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e2062821166903bb62f56"
+  },
+  "Theme": "Строки",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Senior",
+  "CodeSnippet": "using System;\nstring str1 = \"hello\";\nstring str2 = \"hello\";\nstring str3 = \"world\";\nstring str4 = String.Copy(str1);\nstring str5 = String.Intern(str1);\nConsole.WriteLine($\"str1 == str2: {str1 == str2}, ReferenceEquals(str1, str2): {ReferenceEquals(str1, str2)}\");\nConsole.WriteLine($\"str1 == str3: {str1 == str3}, ReferenceEquals(str1, str3): {ReferenceEquals(str1, str3)}\");\nConsole.WriteLine($\"str1 == str4: {str1 == str4}, ReferenceEquals(str1, str4): {ReferenceEquals(str1, str4)}\");\nConsole.WriteLine($\"str1 == str5: {str1 == str5}, ReferenceEquals(str1, str5): {ReferenceEquals(str1, str5)}\");",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Что такое интернирование строк и как оно работает в C#?",
+    "Какова разница между сравнением строк с использованием оператора == и метода ReferenceEquals?"
+  ],
+  "Solution": "Программа должна вывести на консоль: str1 == str2: True, ReferenceEquals(str1, str2): True str1 == str3: False, ReferenceEquals(str1, str3): False str1 == str4: True, ReferenceEquals(str1, str4): False str1 == str5: True, ReferenceEquals(str1, str5): True Результаты вывода обусловлены тем, что в C# строки могут быть интернированы, что означает, что строки с одинаковыми значениями будут ссылаться на один и тот же объект в памяти. Это позволяет сравнивать строки не только по их значениям, но и по ссылкам на объекты в памяти. В случае использования метода String.Intern(), строка будет добавлена в пул интернированных строк, а если строка уже существует в пуле, то будет возвращен объект из пула. В результате строки, содержащие одинаковые литералы, будут ссылаться на один и тот же объект в памяти, что может повысить эффективность использования памяти и сравнения строк в приложениях.",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519929302944101"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519929302944102"
+    },
+    0
+  ]
+},
+{
+  "_id": {
+    "$oid": "664e1dd9821166903bb62f50"
+  },
+  "Theme": "ООП",
+  "AuthorId": "e94a29ed-b2cc-46b8-909d-01eaf1e3f199",
+  "AuthorName": "Болотов Михаил Вячеславович",
+  "Direction": "Backend",
+  "Level": "Junior",
+  "CodeSnippet": "using System;\nclass Vehicle\n{\n   public virtual void Start()\n   {\n       Console.WriteLine(\"Vehicle is starting\");\n   }\n   public virtual void Stop()\n   {\n       Console.WriteLine(\"Vehicle is stopping\");\n   }\n   public void Honk()\n   {\n       Console.WriteLine(\"Vehicle is honking\");\n   }\n}\nclass Car : Vehicle\n{\n   public override void Start()\n   {\n       Console.WriteLine(\"Car is starting\");\n   }\n   public override void Stop()\n   {\n       Console.WriteLine(\"Car is stopping\");\n   }\n   public new void Honk()\n   {\n       Console.WriteLine(\"Car is honking\");\n   }\n}\nclass Program\n{\n   static void Main()\n   {\n       Car car = new Car();\n       TestVehicle(car);\n   }\n   static void TestVehicle(Vehicle vehicle)\n   {\n       vehicle.Stop();\n       vehicle.Honk();\n   }\n}",
+  "MainQuestion": "Что будет выведено на консоль при выполнении данного кода? Почему?",
+  "AdditionalQuestions": [
+    "Как можно обратится к переопределяемому методу базового класса?",
+    "Чем отличается использование ключевого слова override от new при переопределении методов?",
+    "Почему метод Start в классе Car выводит \"Car is starting\", даже если объект создан как Vehicle?"
+  ],
+  "Solution": "Программа должна вывести на консоль: Car is stopping Vehicle is honking Это происходит из-за принципа виртуальных методов. Когда вызывается метод Stop у объекта vehicle, он использует тип объекта во время выполнения (runtime type), который является типом Car. Поэтому вызывается переопределенная версия метода Stop из класса Car",
+  "CreatedDate": [
+    {
+      "$numberLong": "638519922818115139"
+    },
+    0
+  ],
+  "ModifiedDate": [
+    {
+      "$numberLong": "638519922818115140"
+    },
+    0
+  ]
+}]

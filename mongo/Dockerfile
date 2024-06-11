@@ -1,0 +1,3 @@
+FROM mongo:latest
+
+COPY SimplSnippetDatabase.SimplSnippetCollection.json /tmp/SimplSnippetDatabase.SimplSnippetCollection.json
